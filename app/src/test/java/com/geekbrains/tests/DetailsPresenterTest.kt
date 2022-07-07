@@ -3,8 +3,7 @@ package com.geekbrains.tests
 import com.geekbrains.tests.presenter.details.DetailsPresenter
 import com.geekbrains.tests.view.details.ViewDetailsContract
 import com.nhaarman.mockito_kotlin.verify
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -14,7 +13,6 @@ import org.mockito.MockitoAnnotations
 class DetailsPresenterTest {
 
     private lateinit var presenter: DetailsPresenter
-
     private var count = 0
 
     @Mock
@@ -29,7 +27,7 @@ class DetailsPresenterTest {
     @Test
     fun onAttach_Test() {
         presenter.onAttach(viewContract)
-        assertEquals(viewContract, presenter.view)
+        assertSame(viewContract, presenter.view)
     }
 
     @Test
