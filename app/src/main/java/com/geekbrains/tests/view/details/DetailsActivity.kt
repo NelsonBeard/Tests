@@ -18,6 +18,7 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
         setUI()
+        presenter.onAttach(this)
     }
 
     private fun setUI() {
@@ -46,5 +47,10 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
                 putExtra(TOTAL_COUNT_EXTRA, totalCount)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDetach(this)
     }
 }
