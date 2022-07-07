@@ -5,10 +5,10 @@ import com.geekbrains.tests.view.details.ViewDetailsContract
 
 internal class DetailsPresenter internal constructor(
     private val viewContract: ViewDetailsContract,
-    private var count: Int = 0
+    var count: Int = 0
 ) : PresenterDetailsContract {
 
-    private var view: ViewContract? = null
+    var view: ViewContract? = null
 
     override fun onAttach(view: ViewContract) {
         this.view = view
