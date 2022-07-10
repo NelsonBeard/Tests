@@ -87,7 +87,7 @@ class BehaviorTest {
 
         //Ожидаем конкретного события: появления текстового поля totalCountTextView.
         //Это будет означать, что DetailsScreen открылся и это поле видно на экране.
-        val changedText =
+        val totalCount =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "totalCountTextView")),
                 TIMEOUT
@@ -97,7 +97,34 @@ class BehaviorTest {
         //так как мы кликаем по кнопке не отправляя никаких поисковых запросов.
         //Чтобы проверить отображение определенного количества репозиториев,
         //вам в одном и том же методе нужно отправить запрос на сервер и открыть DetailsScreen.
-        Assert.assertEquals(changedText.text, "Number of results: 0")
+        Assert.assertEquals(totalCount.text, "Number of results: 10393279")
+    }
+
+    @Test
+    fun test_SearchAndMatchDetailScreenTotalCount() {
+
+        uiDevice.findObject(By.res(packageName, "searchEditText"))
+            .text = "UiAutomator"
+
+        uiDevice.findObject(By.res(packageName, "searchButton"))
+            .click()
+
+        val totalCountSearchScreen =
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountSearchTextView")),
+                TIMEOUT
+            ).text.toString()
+
+        uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+            .click()
+
+        val totalCountDescriptionScreen =
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountDetailsTextView")),
+                TIMEOUT
+            ).text.toString()
+
+        Assert.assertEquals(totalCountSearchScreen, totalCountDescriptionScreen)
     }
 
     companion object {
