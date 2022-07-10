@@ -6,10 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
-import androidx.test.uiautomator.By
-import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiObject2
-import androidx.test.uiautomator.Until
+import androidx.test.uiautomator.*
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -66,10 +63,10 @@ class BehaviorTest {
 
         val totalCount =
             uiDevice.wait(
-                Until.findObject(By.res(packageName, "totalCountTextView")),
+                Until.findObject(By.res(packageName, "totalCountSearchTextView")),
                 TIMEOUT
             )
-        Assert.assertEquals(totalCount.text.toString(), "Number of results: 10393279")
+        Assert.assertEquals(totalCount.text.toString(), "Number of results: 708")
     }
 
     //Убеждаемся, что DetailsScreen открывается
@@ -89,7 +86,7 @@ class BehaviorTest {
         //Это будет означать, что DetailsScreen открылся и это поле видно на экране.
         val totalCount =
             uiDevice.wait(
-                Until.findObject(By.res(packageName, "totalCountTextView")),
+                Until.findObject(By.res(packageName, "totalCountDetailsTextView")),
                 TIMEOUT
             )
         //Убеждаемся, что поле видно и содержит предполагаемый текст.
@@ -97,7 +94,7 @@ class BehaviorTest {
         //так как мы кликаем по кнопке не отправляя никаких поисковых запросов.
         //Чтобы проверить отображение определенного количества репозиториев,
         //вам в одном и том же методе нужно отправить запрос на сервер и открыть DetailsScreen.
-        Assert.assertEquals(totalCount.text, "Number of results: 10393279")
+        Assert.assertEquals(totalCount.text, "Number of results: 0")
     }
 
     @Test
@@ -118,13 +115,45 @@ class BehaviorTest {
         uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
             .click()
 
-        val totalCountDescriptionScreen =
+        val totalCountDetailsScreen =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "totalCountDetailsTextView")),
                 TIMEOUT
             ).text.toString()
 
-        Assert.assertEquals(totalCountSearchScreen, totalCountDescriptionScreen)
+        Assert.assertEquals(totalCountSearchScreen, totalCountDetailsScreen)
+    }
+
+    @Test
+    fun test_DetailsScreenOnDecrement() {
+        uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+            .click()
+        uiDevice.findObject(UiSelector().text("-"))
+            .click()
+
+        val totalCountDetailsScreen =
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountDetailsTextView")),
+                TIMEOUT
+            )
+
+        Assert.assertEquals(totalCountDetailsScreen.text.toString(), "Number of results: -1")
+    }
+
+    @Test
+    fun test_DetailsScreenOnIncrement() {
+        uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+            .click()
+        uiDevice.findObject(UiSelector().text("+"))
+            .click()
+
+        val totalCountDetailsScreen =
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountDetailsTextView")),
+                TIMEOUT
+            )
+
+        Assert.assertEquals(totalCountDetailsScreen.text.toString(), "Number of results: 1")
     }
 
     companion object {
