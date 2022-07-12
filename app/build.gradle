@@ -46,6 +46,15 @@ android {
             versionNameSuffix '.real'
         }
     }
+
+    sourceSets {
+        androidTest {
+            java.srcDirs += "src/commonData/java"
+        }
+        test {
+            java.srcDirs += "src/commonData/java"
+        }
+    }
 }
 
 dependencies {

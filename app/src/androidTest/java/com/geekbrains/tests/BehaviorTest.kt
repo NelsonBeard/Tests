@@ -55,18 +55,9 @@ class BehaviorTest {
     //Убеждаемся, что поиск работает как ожидается
     @Test
     fun test_SearchIsPositive() {
-        uiDevice.findObject(By.res(packageName, "searchEditText"))
-            .text = "UiAutomator"
 
-        uiDevice.findObject(By.res(packageName, "searchButton"))
-            .click()
-
-        val totalCount =
-            uiDevice.wait(
-                Until.findObject(By.res(packageName, "totalCountSearchTextView")),
-                TIMEOUT
-            )
-        Assert.assertEquals(totalCount.text.toString(), "Number of results: 708")
+        val totalCount = com.geekbrains.tests.commonData().totalCountReader()
+        Assert.assertEquals(totalCount, "Number of results: 708")
     }
 
     //Убеждаемся, что DetailsScreen открывается
@@ -100,17 +91,7 @@ class BehaviorTest {
     @Test
     fun test_SearchAndMatchDetailScreenTotalCount() {
 
-        uiDevice.findObject(By.res(packageName, "searchEditText"))
-            .text = "UiAutomator"
-
-        uiDevice.findObject(By.res(packageName, "searchButton"))
-            .click()
-
-        val totalCountSearchScreen =
-            uiDevice.wait(
-                Until.findObject(By.res(packageName, "totalCountSearchTextView")),
-                TIMEOUT
-            ).text.toString()
+        val totalCountSearchScreen = com.geekbrains.tests.commonData().totalCountReader()
 
         uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
             .click()
@@ -157,6 +138,6 @@ class BehaviorTest {
     }
 
     companion object {
-        private const val TIMEOUT = 5000L
+        const val TIMEOUT = 5000L
     }
 }

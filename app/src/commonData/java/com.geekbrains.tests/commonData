@@ -1,0 +1,31 @@
+package com.geekbrains.tests
+
+import android.content.Context
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.Until
+
+class commonData {
+    private val uiDevice: UiDevice =
+        UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
+    private val context = ApplicationProvider.getApplicationContext<Context>()
+    private val packageName = context.packageName
+    private val timeout = 5000L
+
+
+    fun totalCountReader(): String {
+
+        uiDevice.findObject(By.res(packageName, "searchEditText"))
+            .text = "UiAutomator"
+
+        uiDevice.findObject(By.res(packageName, "searchButton"))
+            .click()
+
+        return uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountSearchTextView")),
+            timeout
+        ).text.toString()
+    }
+}
