@@ -56,7 +56,17 @@ class BehaviorTest {
     @Test
     fun test_SearchIsPositive() {
 
-        val totalCount = com.geekbrains.tests.commonData().totalCountReader()
+        uiDevice.findObject(By.res(packageName, "searchEditText"))
+            .text = "UiAutomator"
+
+        uiDevice.findObject(By.res(packageName, "searchButton"))
+            .click()
+
+        val totalCount = uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountSearchTextView")),
+            TIMEOUT
+        ).text.toString()
+
         Assert.assertEquals(totalCount, "Number of results: 708")
     }
 
@@ -91,7 +101,16 @@ class BehaviorTest {
     @Test
     fun test_SearchAndMatchDetailScreenTotalCount() {
 
-        val totalCountSearchScreen = com.geekbrains.tests.commonData().totalCountReader()
+        uiDevice.findObject(By.res(packageName, "searchEditText"))
+            .text = "UiAutomator"
+
+        uiDevice.findObject(By.res(packageName, "searchButton"))
+            .click()
+
+        val totalCountSearchScreen = uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountSearchTextView")),
+            TIMEOUT
+        ).text.toString()
 
         uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
             .click()
