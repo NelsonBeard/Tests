@@ -1,5 +1,6 @@
 package com.geekbrains.tests.view.search
 
+import FakeGitHubRepository
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -16,6 +17,7 @@ import com.geekbrains.tests.view.details.DetailsActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 class MainActivity : AppCompatActivity(), ViewSearchContract {
 
@@ -63,21 +65,22 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         })
     }
 
-    private fun createRepository(): GitHubRepository {
-        return GitHubRepository(createRetrofit().create(GitHubApi::class.java))
-    }
-
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private fun createRepository(): FakeGitHubRepository {
+        return FakeGitHubRepository()
     }
 
     override fun displaySearchResults(
         searchResults: List<SearchResult>,
         totalCount: Int
     ) {
+        with(totalCountTextView) {
+            visibility = View.VISIBLE
+            text = String.format(
+                Locale.getDefault(), getString(R.string.results_count),
+                totalCount
+            )
+        }
+
         this.totalCount = totalCount
         adapter.updateResults(searchResults)
     }
