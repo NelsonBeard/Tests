@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setUI()
+        presenter.onAttach(this)
     }
 
     private fun setUI() {
@@ -99,5 +100,10 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
 
     companion object {
         const val BASE_URL = "https://api.github.com"
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDetach(this)
     }
 }

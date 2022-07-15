@@ -33,6 +33,12 @@ class SearchPresenterTest {
         presenter = SearchPresenter(viewContract, repository)
     }
 
+    @Test
+    fun onAttach_Test() {
+        presenter.onAttach(viewContract)
+        assertSame(viewContract, presenter.view)
+    }
+
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
     fun searchGitHub_Test() {
         val searchQuery = "some query"
@@ -148,5 +154,11 @@ class SearchPresenterTest {
 
         //Убеждаемся, что ответ от сервера обрабатывается корректно
         verify(viewContract, times(1)).displaySearchResults(searchResults, 101)
+    }
+
+    @Test
+    fun onDetach_Test() {
+        presenter.onDetach(viewContract)
+        assertNull(presenter.view)
     }
 }
