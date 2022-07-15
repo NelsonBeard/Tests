@@ -75,7 +75,7 @@ class MainActivityEspressoTest {
             .perform(replaceText("gitHub"))
             .perform(pressImeActionButton())
 
-        onView(withId(R.id.totalCountTextView)).check(
+        onView(withId(R.id.totalCountSearchTextView)).check(
             matches(
                 withText(
                     "Number of results: 10393279"
